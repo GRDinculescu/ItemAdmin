@@ -28,7 +28,7 @@ public class MainApp {
      * @return the valid option selected by the user
      */
     private static int getUserOption() {
-        int op = 0; // Initialize option variable
+        int op; // Initialize option variable
         while (true) { // Loop until a valid option is provided
             try {
                 // Display the menu and prompt the user for input
