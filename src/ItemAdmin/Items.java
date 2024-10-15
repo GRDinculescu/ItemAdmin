@@ -5,6 +5,7 @@ public class Items {
     int amount;
     static String name;
 
+
     public double getPrice() {
         return price;
     }
