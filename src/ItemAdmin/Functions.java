@@ -1,6 +1,5 @@
 package ItemAdmin;
 
-import javax.xml.transform.Source;
 import java.util.Scanner;
 
 public class Functions {
@@ -87,9 +86,7 @@ public class Functions {
             }
 
             switch (op) {
-                case 1 -> {
-                    changeName(nombre, MainApp.hm.get(nombre));
-                }
+                case 1 -> changeName(nombre, MainApp.hm.get(nombre));
                 case 2 -> changePrice(nombre, MainApp.hm.get(nombre));
                 case 3 -> changeAmount(nombre, MainApp.hm.get(nombre));
                 default -> System.out.println("Debes introducir una de las opciones anteriores.");

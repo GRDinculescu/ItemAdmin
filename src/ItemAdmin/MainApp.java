@@ -1,7 +1,6 @@
 package ItemAdmin;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class MainApp {
@@ -40,9 +39,7 @@ public class MainApp {
                 case 3 -> Functions.updateItem(); // todo Actualizar items
                 case 4 -> Functions.showAll();
                 case 5 -> Functions.searchItem();
-                default -> {
-                    System.out.println("Debes elegir entre las opciones anteriores.");
-                    continue;}
+                default -> System.out.println("Debes elegir entre las opciones anteriores.");
             }
         } while (true);
 
