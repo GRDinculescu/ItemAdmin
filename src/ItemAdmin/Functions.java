@@ -1,190 +1,165 @@
 package ItemAdmin;
 
-import java.util.Scanner;
+import java.util.Scanner; // Import the Scanner class for user input
 
 public class Functions {
-    // Adds items to HashMap
-    public static void addItem(){
-        Scanner sn = new Scanner(System.in);
-        System.out.print("\nIntroduce el nombre del producto: ");
-        String nombre = sn.nextLine();
+    // Adds items to the HashMap
+    public static void addItem() {
+        Scanner sn = new Scanner(System.in); // Create a Scanner instance for user input
+        System.out.print("\nEnter the product name: "); // Prompt for product name
+        String name = sn.nextLine(); // Read the product name
 
-        double precio = getPrice();
-        int cantidad = getAmount();
+        double price = getPrice(); // Get the price of the product
+        int quantity = getQuantity(); // Get the quantity of the product
 
-        Items item = new Items(precio, cantidad, nombre);
+        Items item = new Items(price, quantity, name); // Create a new item object
 
-        if (MainApp.hm.containsKey(nombre)){
-            System.out.println("Ya hay un producto con ese nombre.");
+        // Check if the product name already exists in the HashMap
+        if (MainApp.hm.containsKey(name)) {
+            System.out.println("A product with that name already exists."); // Inform the user if the product exists
         } else {
-            MainApp.hm.put(nombre, item);
+            MainApp.hm.put(name, item); // Add the item to the HashMap
         }
 
-        System.out.println("Se agrego\nProducto: "+nombre+
-                "\nPrecio: "+precio+
-                "\nCantidad: "+cantidad);
+        // Display the details of the added item
+        System.out.printf(""" 
+                Added
+                  - Product: %s
+                  - Price: %.2f
+                  - Quantity: %d
+                """, name, price, quantity);
     }
 
-    // Removes items from HashMap
-    public static void removeItem(){
-        Scanner sn = new Scanner(System.in);
+    // Removes items from the HashMap
+    public static void removeItem() {
+        Scanner sn = new Scanner(System.in); // Create a Scanner instance for user input
 
-        System.out.print("Introduce el nombre del producto: ");
-        String nombre = sn.nextLine();
+        System.out.print("Enter the product name: "); // Prompt for product name
+        String name = sn.nextLine(); // Read the product name
 
-        if(MainApp.hm.containsKey(nombre)){
-            MainApp.hm.remove(nombre);
-            System.out.println("El producto: "+nombre+" fue borrado correctamente.\n");
+        // Check if the product name exists in the HashMap
+        if (MainApp.hm.containsKey(name)) {
+            MainApp.hm.remove(name); // Remove the item from the HashMap
+            System.out.println("%nProduct: " + name + " was removed successfully.\n"); // Confirm removal
         } else {
+            // Display an error message if the product does not exist
             System.out.println("""
                     ------------- ERROR -------------
-                    El producto introducido no existe.
+                    The entered product does not exist.
                     """);
         }
     }
 
-    // [3] Update items
-    public static void updateItem(){
-        Scanner sn = new Scanner(System.in);
+    // Updates the stock of items
+    public static void updateStock() {
+        Scanner sn = new Scanner(System.in); // Create a Scanner instance for user input
 
-        System.out.print("\nIntroduzca el nombre del producto a actualizar: ");
-        String nombre = sn.nextLine();
-
-        try {
-            Items item = MainApp.hm.get(nombre);
-
-            System.out.printf("""
-                    Sus valores actuales son:
-                    Nombre: %s
-                    Precio: %.2f$
-                    Cantidad: %d%n""", nombre, item.price, item.amount);
-        } catch (Exception e) {
-            System.out.printf("No se encontro el producto: %s%n", nombre);
-            return;
-        }
-
-        do {
-            int op;
-            nombre = Items.name;
-            try {
-                System.out.println("""
-                        
-                        Que quieres cambiar:
-                        [1] Nombre
-                        [2] Precio
-                        [3] Cantidad
-                        [4] Volver""");
-                op = sn.nextInt();
-            } catch (Exception e) {
-                System.out.println("Debes introducir numeros enteros.");
-                sn.next();
-                continue;
-            }
-
-            if (op == 4){
-                return;
-            }
-
-            switch (op) {
-                case 1 -> changeName(nombre, MainApp.hm.get(nombre));
-                case 2 -> changePrice(nombre, MainApp.hm.get(nombre));
-                case 3 -> changeAmount(nombre, MainApp.hm.get(nombre));
-                default -> System.out.println("Debes introducir una de las opciones anteriores.");
-            }
-        } while (true);
-    }
-
-    public static void changeName (String nameO, Items item){
-        Scanner sn = new Scanner(System.in);
-
-        System.out.print("Cual seria el nuevo nombre: ");
-        String name = sn.nextLine();
-
-        MainApp.hm.put(name, item);
-        MainApp.hm.remove(nameO);
-
-        item.setName(name);
-    }
-
-    public static void changePrice (String name, Items item){
-        double precio = getPrice();
-
-        item.setPrice(precio);
-
-        MainApp.hm.put(name, item);
-    }
-
-    public static void changeAmount (String name, Items item){
-        int amount = getAmount();
-
-        item.setAmount(amount);
-
-        MainApp.hm.put(name, item);
-    }
-
-
-    // [4] Show all items
-    public static void showAll(){
-        for (String i : MainApp.hm.keySet()){
-            Items item = MainApp.hm.get(i);
-            System.out.printf("Producto: %s - Precio: %.2f - Cantidad: %d%n", i, item.price, item.amount);
-        }
-    }
-
-    // [5] Search item by name
-    public static void searchItem(){
-        Scanner sn = new Scanner(System.in);
-
-        System.out.print("Introduzca el nombre el producto: ");
-        String producto = sn.nextLine();
+        System.out.print("\nEnter the name of the product to update: "); // Prompt for product name
+        String name = sn.nextLine(); // Read the product name
 
         try {
-            Items item = MainApp.hm.get(producto);
-            System.out.println("Producto: " + producto +
-                    " - Precio: " + item.price +
-                    "$ - Cantidad: " + item.amount);
+            Items item = MainApp.hm.get(name); // Retrieve the item from the HashMap
+
+            // Display the current values of the item
+            System.out.printf(""" 
+                    Its current values are:
+                    Name: %s
+                    Price: %.2f$
+                    Quantity: %d%n""", name, item.price, item.quantity);
         } catch (Exception e) {
-            System.out.printf("No se encuentra el producto: %s%n", producto);
+            // Display an error message if the product is not found
+            System.out.printf(""" 
+                    %n------------ ERROR ------------
+                    The product [%s] was not found %n""", name);
+            return; // Exit the method
+        }
+
+        changeQuantity(name, MainApp.hm.get(name)); // Call method to change the quantity
+    }
+
+    // Changes the quantity of an existing item
+    public static void changeQuantity(String name, Items item) {
+        int quantity = getQuantity(); // Get the new quantity from user input
+
+        item.setQuantity(quantity); // Update the item's quantity
+
+        MainApp.hm.put(name, item); // Put the updated item back in the HashMap
+    }
+
+    // Shows all items in the HashMap
+    public static void showAll() {
+        // Iterate over all keys in the HashMap
+        for (String i : MainApp.hm.keySet()) {
+            Items item = MainApp.hm.get(i); // Retrieve the item
+            // Display the details of each item
+            System.out.printf(""" 
+                    %nProduct: %s
+                      - Price: %.2f
+                      - Quantity: %d%n
+                    """, i, item.price, item.quantity);
         }
     }
 
+    // Searches for an item by name
+    public static void searchItem() {
+        Scanner sn = new Scanner(System.in); // Create a Scanner instance for user input
+
+        System.out.print("Enter the product name: "); // Prompt for product name
+        String product = sn.nextLine(); // Read the product name
+
+        try {
+            Items item = MainApp.hm.get(product); // Retrieve the item from the HashMap
+            // Display the details of the found item
+            System.out.printf(""" 
+                    %nProduct: %s
+                      - Price: %.2f$
+                      - Quantity: %d%n
+                    """, product, item.price, item.quantity);
+        } catch (Exception e) {
+            // Display an error message if the product cannot be found
+            System.out.printf("The product [%s] cannot be found%n", product);
+        }
+    }
 
     // -------↓↓↓------- DON'T TOUCH -------↓↓↓-------
-    // Get the item's price
+
+    // Gets the item's price from user input
     public static double getPrice() {
-        Scanner sn = new Scanner(System.in);
-        double precio;
+        Scanner sn = new Scanner(System.in); // Create a Scanner instance for user input
+        double price;
 
         do {
             try {
-                System.out.print("Introduce el precio del producto: ");
-                precio = sn.nextDouble();
-                break;
+                System.out.print("Enter the product price: "); // Prompt for product price
+                price = sn.nextDouble(); // Read the price input
+                break; // Exit the loop if input is valid
             } catch (Exception e) {
-                System.out.println("Solo puedes introducir numeros enteros o con decimales separados por punto.");
-                sn.next();
+                // Display an error message if input is invalid
+                System.out.println("You can only enter whole numbers or decimals separated by a point.");
+                sn.next(); // Clear the invalid input
             }
         } while (true);
 
-        return precio;
+        return price; // Return the valid price
     }
 
-    // Get the amount of items
-    public static int getAmount() {
-        Scanner sn = new Scanner(System.in);
-        int cantidad;
+    // Gets the quantity of items from user input
+    public static int getQuantity() {
+        Scanner sn = new Scanner(System.in); // Create a Scanner instance for user input
+        int quantity;
 
         do {
             try {
-                System.out.print("Introduce la cantidad del producto: ");
-                cantidad = sn.nextInt();
-                break;
+                System.out.print("Enter the product quantity: "); // Prompt for product quantity
+                quantity = sn.nextInt(); // Read the quantity input
+                break; // Exit the loop if input is valid
             } catch (Exception e) {
-                System.out.println("Solo puedes introducir numeros enteros.");
-                sn.next();
+                // Display an error message if input is invalid
+                System.out.println("You can only enter whole numbers.");
+                sn.next(); // Clear the invalid input
             }
         } while (true);
 
-        return cantidad;
+        return quantity; // Return the valid quantity
     }
 }
