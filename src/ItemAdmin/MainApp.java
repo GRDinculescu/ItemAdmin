@@ -36,7 +36,7 @@ public class MainApp {
             switch (op){
                 case 1 -> Functions.addItem();
                 case 2 -> Functions.removeItem();
-                case 3 -> Functions.updateItem(); // todo Actualizar items
+                case 3 -> Functions.updateItem();
                 case 4 -> Functions.showAll();
                 case 5 -> Functions.searchItem();
                 default -> System.out.println("Debes elegir entre las opciones anteriores.");
