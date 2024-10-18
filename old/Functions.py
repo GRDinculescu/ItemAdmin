@@ -7,9 +7,7 @@ class Func():
         self.item = Item()
 
     def addItem(self):
-        
-        print("\nEnter the product name: ") # Prompt for product name
-        name = input() # Read the product name
+        name = input("\nEnter the product name: ") # Read the product name
 
         price = Func.getPrice() # Get the price of the product
         quantity = Func.getQuantity() # Get the quantity of the product

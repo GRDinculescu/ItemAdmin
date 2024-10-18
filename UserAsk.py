@@ -1,9 +1,10 @@
-from Functions import Func
+# from old.Functions import Func # Uncoment this line to use the Functions file instead
+from DBFunc import DB
 
 class Ask():
     dic = {}
     def start(self):
-        self.func = Func()
+        self.func = DB() # Change DB() to Func() if you use Functions.py
         while True:
             op = self.getUserOption()
             if op == 6:
@@ -32,7 +33,7 @@ What do you want to do:
     def executeOption(self, op):
         match op:
             case 1: self.func.addItem() # Call method to add an item
-            case 2: self.func.removeItem() # Call method to remove an item
+            case 2: self.func.removeItems() # Call method to remove an item | Change removeItems() with removeItem()
             case 3: self.func.updateStock() # Call method to update stock quantity
             case 4: self.func.showAll() # Call method to show all items
             case 5: self.func.searchItem()  # Call method to search for an item
